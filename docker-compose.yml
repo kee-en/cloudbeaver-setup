@@ -1,0 +1,47 @@
+name: cloudbeaver
+services:
+    cloudbeaver:
+        cpu_shares: 90
+        command: []
+        container_name: cloudbeaver
+        deploy:
+            resources:
+                limits:
+                    memory: "16198402048"
+        environment:
+            CB_LOCAL_HOST_ADDR: ""
+        extra_hosts:
+            - 'host.docker.internal:'
+        image: dbeaver/cloudbeaver:latest
+        labels:
+            icon: http://172.16.254.130:8080/apple-touch-icon.png
+        networks:
+            cloudbeaver_default: null
+        ports:
+            - mode: ingress
+              target: 8978
+              published: "8080"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /workspace
+              target: /opt/cloudbeaver/workspace
+              bind:
+                create_host_path: true
+networks:
+    cloudbeaver_default:
+        name: cloudbeaver_default
+    default:
+        name: cloudbeaver_default
+x-casaos:
+    author: self
+    category: self
+    hostname: ""
+    icon: http://172.16.254.130:8080/apple-touch-icon.png
+    index: /
+    is_uncontrolled: false
+    port_map: "8080"
+    scheme: http
+    title:
+        custom: CloudBeaver

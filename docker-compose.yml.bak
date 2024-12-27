@@ -1,0 +1,12 @@
+services:
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:latest
+    ports:
+      - 8080:8978
+    volumes:
+      - /workspace:/opt/cloudbeaver/workspace
+    extra_hosts:
+      - "host.docker.internal:${CB_LOCAL_HOST_ADDR}"
+    environment:
+      - CB_LOCAL_HOST_ADDR=${CB_LOCAL_HOST_ADDR}
+    restart: unless-stopped
